@@ -1,4 +1,5 @@
 #!/usr/bin/python
+from Adafruit_I2C import Adafruit_I2C
 from TSL2591 import TSL2591
 
 if __name__ == '__main__':
