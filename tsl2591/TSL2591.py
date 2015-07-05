@@ -6,7 +6,7 @@ class TSL2591:
   
   # Channels
   __CH0				= 0 	# FULLSPECTRUM
-  __CH1				= 1     # INFRARED
+  __CH1				= 1   # INFRARED
   __CH2				= 2 	# VISIBLE 
 
   # Chip
@@ -15,8 +15,8 @@ class TSL2591:
 
   # Command
   __COMMAND_BIT			= 0xA0 	# bits 7 and 5 for 'command normal'
-  __CLEAR_BIT			= 0x40 	# Clears any pending interrupt (write 1 to clear)
-  __WORD_BIT			= 0x20  # 1 = read/write word (rather than byte)
+  __CLEAR_BIT			  = 0x40 	# Clears any pending interrupt (write 1 to clear)
+  __WORD_BIT			  = 0x20  # 1 = read/write word (rather than byte)
   __BLOCK_BIT 			= 0x10	# 1 = using block read/write
 
   __ENABLE_POWERON    		= 0x01
@@ -41,9 +41,9 @@ class TSL2591:
   __REG_THRESHHOLDH_HIGH 	= 0x05
   __REG_INTERRUPT        	= 0x06
   __REG_CRC              	= 0x08
-  __REG_PACKAGE		 	= 0x11
-  __REG_ID			= 0x12
-  __REG_STATUS		 	= 0x13
+  __REG_PACKAGE		 	      = 0x11
+  __REG_ID			          = 0x12
+  __REG_STATUS		 	      = 0x13
   __REG_CHAN0_LOW        	= 0x14
   __REG_CHAN0_HIGH       	= 0x15
   __REG_CHAN1_LOW        	= 0x16
@@ -58,7 +58,7 @@ class TSL2591:
   __INTEGRATIONTIME_600MS     	= 0x05
 
   # Gain
-  __GAIN_LOW         		= 0x00    # low gain (1x)
+  __GAIN_LOW         		  = 0x00    # low gain (1x)
   __GAIN_MED            	= 0x10    # medium gain (25x)
   __GAIN_HIGH           	= 0x20    # medium gain (428x)
   __GAIN_MAX            	= 0x30    # max gain (9876x)
