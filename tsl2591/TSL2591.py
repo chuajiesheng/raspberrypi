@@ -99,7 +99,7 @@ class TSL2591:
     else:
       return self.begin()
   
-  def enable(self, aen=False, aien=False):
+  def enable(self, aen=True, aien=True):
     initSuccess = self.initAndBegin()
     if (not initSuccess):
       return
@@ -186,7 +186,7 @@ class TSL2591:
     if (not initSuccess):
       return
 
-    self.enable(aen=True, aien=True)
+    self.enable()
     for x in range(0, self._integration + 1):
       sleep(0.12)
 
