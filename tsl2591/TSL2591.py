@@ -185,9 +185,9 @@ class TSL2591:
       sleep(0.12)
 
     print '[getFullLuminosity] ch0'
-    ch0 = self.read16(self.__REG_CHAN0_LOW)
+    ch0 = self.read16(0xb8)
     print '[getFullLuminosity] ch1'
-    ch1 = self.read16(self.__REG_CHAN1_LOW)
+    ch1 = self.read16(0xba)
     if (self.debug):
       print '[getFullLuminosity] ch0 = ', hex(ch0) 
       print '[getFullLuminosity] ch1 = ', hex(ch1) 
