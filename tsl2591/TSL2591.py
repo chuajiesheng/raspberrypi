@@ -129,11 +129,17 @@ class TSL2591:
   def getTiming(self):
     return self._integration
 
+  def read8(reg):
+    return self.i2c.readU8(self.__COMMAND_BIT | reg)
+
+  def read16(reg):
+    return self.i2c.readU16(self.__COMMAND_BIT | reg)
+
   def readPackage(self):
-    return self.i2c.readU8(self.__COMMAND_BIT | self.__REG_PACKAGE)
+    return self.read8(self.__REG_PACKAGE)
 
   def readID(self):
-    return self.i2c.readU8(self.__COMMAND_BIT | self.__REG_ID)
+    return self.read8(self.__REG_ID)
 
   def readStatus(self):
     return self.i2c.readU8(self.__COMMAND_BIT | self.__REG_STATUS)
