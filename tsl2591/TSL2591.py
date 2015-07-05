@@ -74,6 +74,7 @@ class TSL2591:
     self._gain        = self.__GAIN_MED
 
   def begin(self):
+    self.reset()
     id = self.readID()
     if (id != 0x50):
       return False
@@ -86,6 +87,11 @@ class TSL2591:
     self.setGain(self._gain)
     self.disable()
     return True
+
+  def reset(self):
+    if (self.debug):
+      print '[reset]'
+    self.i2c.write8(self.__COMMAND_BIT | self.__REG_CONTROL, self.__CONTROL_RESET)
 
   def initAndBegin(self):
     if (self._initialized):
