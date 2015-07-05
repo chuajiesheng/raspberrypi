@@ -10,3 +10,4 @@ if __name__ == '__main__':
   chip.readID()
   chip.readStatus()
   chip.disable()
+  chip.getFullLuminosity()

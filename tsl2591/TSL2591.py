@@ -142,7 +142,45 @@ class TSL2591:
     return self.read8(self.__REG_ID)
 
   def readStatus(self):
-    return self.i2c.readU8(self.__COMMAND_BIT | self.__REG_STATUS)
+    return self.read8(self.__REG_STATUS)
+
+  def getIntegrationTime(integration):
+    atime = {
+      self.__INTEGRATIONTIME_100MS: 100.0,
+      self.__INTEGRATIONTIME_200MS: 200.0,
+      self.__INTEGRATIONTIME_300MS: 300.0,
+      self.__INTEGRATIONTIME_400MS: 400.0,
+      self.__INTEGRATIONTIME_500MS: 500.0,
+      self.__INTEGRATIONTIME_600MS: 600.0,
+    }
+    return atime[integration]()
+
+  def getAmplifiersValue(gain):
+    again = {
+      self.__GAIN_LOW:  1.0,
+      self.__GAIN_MED:  25.0,
+      self.__GAIN_HIGH: 428.0,
+      self.__GAIN_MAX:  9876.0
+    }
+    return again[gain]()
+
+  def getFullLuminosity(self):
+    initSuccess = self.initAndBegin()
+    if (not initSuccess):
+      return
+
+    self.enable()
+    for x in range(0, self._integration):
+      sleep(0.12)
+
+    ch0 = self.read16(self.__REG_CHAN0_LOW)
+    ch1 = self.read16(self.__REG_CHAN1_LOW)
+    if (self.debug):
+      print '[getFullLuminosity] ch0 = ', hex(ch0), '\n' 
+      print '[getFullLuminosity] ch1 = ', hex(ch1), '\n' 
+
+    disable()
+    return (ch1 << 16) | ch0
 
   def readFull(self):
     x = self.i2c.readU8(self.__REG_CHAN0_LOW)
