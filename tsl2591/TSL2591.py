@@ -66,7 +66,7 @@ class TSL2591:
   def __init__(self, address=__ADDRESS, debug=False):
     self.i2c = Adafruit_I2C(address, debug=debug)
     self.address = address
-    self.debug = False
+    self.debug = debug
 
     self._initialized = False
     self._integration = self.__INTEGRATIONTIME_100MS
