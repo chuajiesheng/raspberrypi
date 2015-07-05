@@ -193,11 +193,3 @@ class TSL2591:
 
     self.disable()
     return (ch1 << 16) | ch0
-
-  def readFull(self):
-    x = self.i2c.readU8(self.__REG_CHAN0_LOW)
-    y = self.i2c.readU8(self.__REG_CHAN0_HIGH)
-
-  def readIR(self):
-    x = self.i2c.readU8(self.__REG_CHAN1_LOW)
-    y = self.i2c.readU8(self.__REG_CHAN1_HIGH)
