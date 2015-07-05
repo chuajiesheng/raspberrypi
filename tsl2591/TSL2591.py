@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from Adafruit_I2C import Adafruit_I2C
+from time import sleep
 
 class TSL2591:
   i2c = None
