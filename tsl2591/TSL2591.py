@@ -74,7 +74,6 @@ class TSL2591:
     self._gain        = self.__GAIN_MED
 
   def begin(self):
-    self.reset()
     id = self.readID()
     if (id != 0x50):
       return False
