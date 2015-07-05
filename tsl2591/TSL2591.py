@@ -180,7 +180,7 @@ class TSL2591:
       return
 
     self.enable()
-    for x in range(0, self._integration):
+    for x in range(0, self._integration + 1):
       sleep(0.12)
 
     print '[getFullLuminosity] ch0'
