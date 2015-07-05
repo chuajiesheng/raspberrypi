@@ -68,56 +68,66 @@ class TSL2591:
     self.address = address
     self.debug = False
 
-    _initialized = False
-    _integration = self.__INTEGRATIONTIME_100MS
-    _gain        = self.__GAIN_MED
+    self._initialized = False
+    self._integration = self.__INTEGRATIONTIME_100MS
+    self._gain        = self.__GAIN_MED
 
   def begin(self):
-    id = readID()
-    if (id != 0x50) {
+    id = self.readID()
+    if (id != 0x50):
       return False
-    }
     _initialized = True
-    if (debug) {
+
+    if (self.debug):
       print '[begin] _initialized = ', _initialized, '\n' 
-    }
-    setTiming(_integration)
-    setGain(_gain)
-    disable()
+
+    self.setTiming(self._integration)
+    self.setGain(self._gain)
+    self.disable()
     return True
 
   def initAndBegin(self):
-    if (!_initialized && !begin()) {
-      return;
-    }
+    return self._initialized and self.begin()
   
   def enable(self, aen=False, aien=False):
-    initAndBegin()
+    initSuccess = self.initAndBegin()
+    if (not initSuccess):
+      return
+
     self.i2c.write8(self.__COMMAND_BIT | self.__REG_ENABLE, 
         self.__ENABLE_POWERON | (aen & self.__ENABLE_AEN) | (aien & self.__ENABLE_AIEN))
 
   def disable(self):
-    initAndBegin()
+    initSuccess = self.initAndBegin()
+    if (not initSuccess):
+      return
+
     self.i2c.write8(self.__COMMAND_BIT | self.__REG_ENABLE, 
         self.__ENABLE_POWEROFF)
 
   def setGain(self, gain):
-    initAndBegin()
-    _gain = gain
+    initSuccess = self.initAndBegin()
+    if (not initSuccess):
+      return
+
+    self._gain = gain
     self.i2c.write8(self.__COMMAND_BIT | self.__REG_CONTROL, _integration | _gain)
     disable()
 
   def getGain(self):
-    return _gain
+    return self._gain
 
   def setTiming(self, integration):
-    initAndBegin()
-    _integration = integration
+    initSuccess = self.initAndBegin()
+    if (not initSuccess):
+      return
+
+    self._integration = integration
     self.i2c.write8(self.__COMMAND_BIT | self.__REG_CONTROL, _integration | _gain)
     disable()
 
   def getTiming(self):
-    return _integration
+    return self._integration
 
   def readPackage(self):
     return self.i2c.readU8(self.__COMMAND_BIT | self.__REG_PACKAGE)
