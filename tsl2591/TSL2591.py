@@ -68,17 +68,56 @@ class TSL2591:
     self.address = address
     self.debug = False
 
-    _initialized = False;
-    _integration = self.__INTEGRATIONTIME_100MS;
-    _gain        = self.__GAIN_MED;
+    _initialized = False
+    _integration = self.__INTEGRATIONTIME_100MS
+    _gain        = self.__GAIN_MED
 
+  def begin(self):
+    id = readID()
+    if (id != 0x50) {
+      return False
+    }
+    _initialized = True
+    if (debug) {
+      print '[begin] _initialized = ', _initialized, '\n' 
+    }
+    setTiming(_integration)
+    setGain(_gain)
+    disable()
+    return True
+
+  def initAndBegin(self):
+    if (!_initialized && !begin()) {
+      return;
+    }
+  
   def enable(self, aen=False, aien=False):
+    initAndBegin()
     self.i2c.write8(self.__COMMAND_BIT | self.__REG_ENABLE, 
-		self.__ENABLE_POWERON | (aen & self.__ENABLE_AEN) | (aien & self.__ENABLE_AIEN))
+        self.__ENABLE_POWERON | (aen & self.__ENABLE_AEN) | (aien & self.__ENABLE_AIEN))
 
   def disable(self):
+    initAndBegin()
     self.i2c.write8(self.__COMMAND_BIT | self.__REG_ENABLE, 
-		self.__ENABLE_POWEROFF)
+        self.__ENABLE_POWEROFF)
+
+  def setGain(self, gain):
+    initAndBegin()
+    _gain = gain
+    self.i2c.write8(self.__COMMAND_BIT | self.__REG_CONTROL, _integration | _gain)
+    disable()
+
+  def getGain(self):
+    return _gain
+
+  def setTiming(self, integration):
+    initAndBegin()
+    _integration = integration
+    self.i2c.write8(self.__COMMAND_BIT | self.__REG_CONTROL, _integration | _gain)
+    disable()
+
+  def getTiming(self):
+    return _integration
 
   def readPackage(self):
     return self.i2c.readU8(self.__COMMAND_BIT | self.__REG_PACKAGE)
