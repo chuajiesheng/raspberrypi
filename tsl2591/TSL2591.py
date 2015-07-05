@@ -76,10 +76,10 @@ class TSL2591:
     id = self.readID()
     if (id != 0x50):
       return False
-    _initialized = True
-
+    self._initialized = True
+    
     if (self.debug):
-      print '[begin] _initialized = ', _initialized, '\n' 
+      print '[begin] _initialized = ', self._initialized 
 
     self.setTiming(self._integration)
     self.setGain(self._gain)
@@ -87,13 +87,17 @@ class TSL2591:
     return True
 
   def initAndBegin(self):
-    return self._initialized and self.begin()
+    if (self._initialized):
+      return True
+    else:
+      return self.begin()
   
   def enable(self, aen=False, aien=False):
     initSuccess = self.initAndBegin()
     if (not initSuccess):
       return
 
+    print '[enable]'
     self.i2c.write8(self.__COMMAND_BIT | self.__REG_ENABLE, 
         self.__ENABLE_POWERON | (aen & self.__ENABLE_AEN) | (aien & self.__ENABLE_AIEN))
 
@@ -102,6 +106,7 @@ class TSL2591:
     if (not initSuccess):
       return
 
+    print '[disable]'
     self.i2c.write8(self.__COMMAND_BIT | self.__REG_ENABLE, 
         self.__ENABLE_POWEROFF)
 
@@ -111,8 +116,9 @@ class TSL2591:
       return
 
     self._gain = gain
-    self.i2c.write8(self.__COMMAND_BIT | self.__REG_CONTROL, _integration | _gain)
-    disable()
+    print '[setGain]'
+    self.i2c.write8(self.__COMMAND_BIT | self.__REG_CONTROL, self._integration | self._gain)
+    self.disable()
 
   def getGain(self):
     return self._gain
@@ -123,8 +129,9 @@ class TSL2591:
       return
 
     self._integration = integration
-    self.i2c.write8(self.__COMMAND_BIT | self.__REG_CONTROL, _integration | _gain)
-    disable()
+    print '[setTiming]'
+    self.i2c.write8(self.__COMMAND_BIT | self.__REG_CONTROL, self._integration | self._gain)
+    self.disable()
 
   def getTiming(self):
     return self._integration
@@ -136,12 +143,15 @@ class TSL2591:
     return self.i2c.readU16(self.__COMMAND_BIT | reg)
 
   def readPackage(self):
+    print '[readPackage]'
     return self.read8(self.__REG_PACKAGE)
 
   def readID(self):
+    print '[readID]'
     return self.read8(self.__REG_ID)
 
   def readStatus(self):
+    print '[readStatus]'
     return self.read8(self.__REG_STATUS)
 
   def getIntegrationTime(integration):
@@ -173,13 +183,15 @@ class TSL2591:
     for x in range(0, self._integration):
       sleep(0.12)
 
+    print '[getFullLuminosity] ch0'
     ch0 = self.read16(self.__REG_CHAN0_LOW)
+    print '[getFullLuminosity] ch1'
     ch1 = self.read16(self.__REG_CHAN1_LOW)
     if (self.debug):
-      print '[getFullLuminosity] ch0 = ', hex(ch0), '\n' 
-      print '[getFullLuminosity] ch1 = ', hex(ch1), '\n' 
+      print '[getFullLuminosity] ch0 = ', hex(ch0) 
+      print '[getFullLuminosity] ch1 = ', hex(ch1) 
 
-    disable()
+    self.disable()
     return (ch1 << 16) | ch0
 
   def readFull(self):
