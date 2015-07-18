@@ -92,4 +92,4 @@ if __name__ == '__main__':
     put(index, doc, data)
     #get_mapping(index, doc)
     refresh_index(index)
-    search(index, {'query': {'match_all': {}}, 'sort': [{'_timestamp': {'order': 'desc'}}]})
+    #search(index, {'query': {'match_all': {}}, 'sort': [{'_timestamp': {'order': 'desc'}}]})
