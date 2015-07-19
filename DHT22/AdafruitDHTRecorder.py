@@ -76,6 +76,7 @@ def getHumidtyAndTemperature(sensor, pin):
     return { 'humidity': humidity, 'temperature': temperature }
 
 if __name__ == '__main__':
+    print(datetime.now())
     index = 'temperature-index'
     doc = 'temperature'
 
