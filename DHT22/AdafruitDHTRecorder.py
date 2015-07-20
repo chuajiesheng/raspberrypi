@@ -1,11 +1,21 @@
 import Adafruit_DHT
 from datetime import datetime
 from elasticsearch import Elasticsearch
+import RPi.GPIO as GPIO
 import sys
 
 DEVICE = 'raspberrypi1'
 PIN = 20
 SENSOR = Adafruit_DHT.DHT22
+
+GREEN_LED = 19
+BLUE_LED = 26
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+
+GPIO.setup(GREEN_LED, GPIO.OUT)
+GPIO.setup(BLUE_LED, GPIO.OUT)
 
 es = None
 
@@ -76,6 +86,8 @@ def getHumidtyAndTemperature(sensor, pin):
     return { 'humidity': humidity, 'temperature': temperature }
 
 if __name__ == '__main__':
+    GPIO.output(BLUE_LED, True)
+
     print(datetime.now())
     index = 'temperature-index'
     doc = 'temperature'
@@ -94,3 +106,6 @@ if __name__ == '__main__':
     #get_mapping(index, doc)
     refresh_index(index)
     #search(index, {'query': {'match_all': {}}, 'sort': [{'_timestamp': {'order': 'desc'}}]})
+
+    GPIO.output(BLUE_LED, False)
+    GPIO.cleanup()
