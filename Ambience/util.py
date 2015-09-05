@@ -6,7 +6,7 @@ import sys
 
 def create_index(es, index):
     res = es.indices.create(index=index, ignore=400)
-    print('create_index:', res)
+    print('create_index:', index, res)
 
 def refresh_index(es, index_name):
     res = es.indices.refresh(index=index_name)
@@ -14,26 +14,26 @@ def refresh_index(es, index_name):
 
 def delete_index(es, index_name):
     res = es.indices.delete(index=index_name, ignore=404)
-    print('delete_index:', res)
+    print('delete_index:', index_name, res)
     return res
 
 def get_mapping(es, index_name, doc_type):
     mapping = es.indices.get_mapping(index=index_name, doc_type=doc_type)
-    print('get_mapping:', mapping)
+    print('get_mapping:', index_name, doc_type, mapping)
     return mapping
 
 def put_mapping(es, index_name, doc_type, body):
     res = es.indices.put_mapping(index=index_name, doc_type=doc_type, body=body)
-    print('put_mapping:', res)
+    print('put_mapping:', index_name, doc_type, res)
     return res
 
 def put(es, index_name, doc_type, doc):
     res = es.index(index=index_name, doc_type=doc_type, body=doc)
-    print('put:', res['created'])
+    print('put:', index_name, doc_type, res['created'])
 
 def get(es, index_name, doc_type, id):
     res = es.get(index=index_name, doc_type=doc_type, id=id)
-    print ('get:', res['_source'])
+    print ('get:', index_name, doc_type, id, res['_source'])
 
 def search(es, index_name, query):
     res = es.search(index=index_name, body=query)
