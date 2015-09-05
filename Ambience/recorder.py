@@ -25,7 +25,7 @@ def get_temperature_data(temperature):
         'place': 'home',
         'device': DEVICE,
         'temperature': temperature,
-        'timestamp': datetime.now().strftime('%Y%m%d%H%M%S')
+        'timestamp': long(datetime.now().strftime('%Y%m%d%H%M%S'))
     }
     return doc
 
@@ -34,7 +34,7 @@ def get_humidity_data(humidity):
         'place': 'home',
         'device': DEVICE,
         'humidity': humidity,
-        'timestamp': datetime.now().strftime('%Y%m%d%H%M%S')
+        'timestamp': long(datetime.now().strftime('%Y%m%d%H%M%S'))
     }
     return doc
 

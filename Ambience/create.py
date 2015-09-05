@@ -51,7 +51,6 @@ def get_humidity_mapping_body():
     return mapping
 
 def create(index, doc, mapping):
-
     util.put_mapping(es, index, doc, mapping)
     util.get_mapping(es, index, doc)
 
