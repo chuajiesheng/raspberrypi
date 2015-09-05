@@ -9,8 +9,8 @@ DEVICE = 'raspberrypi1'
 PIN = 20
 SENSOR = Adafruit_DHT.DHT22
 
-GREEN_LED = 19
-BLUE_LED = 26
+BLUE_LED = 19
+GREEN_LED = 26
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -55,7 +55,7 @@ def create(index, doc, mapping):
     util.get_mapping(es, index, doc)
 
 if __name__ == '__main__':
-    GPIO.output(BLUE_LED, True)
+    GPIO.output(GREEN_LED, True)
 
     print(datetime.now())
 
@@ -72,5 +72,5 @@ if __name__ == '__main__':
     doc = 'humidity'
     create(index, doc, get_humidity_mapping_body())
 
-    GPIO.output(BLUE_LED, False)
+    GPIO.output(GREEN_LED, False)
     GPIO.cleanup()

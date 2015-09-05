@@ -9,8 +9,8 @@ DEVICE = 'raspberrypi1'
 PIN = 20
 SENSOR = Adafruit_DHT.DHT22
 
-GREEN_LED = 26
 BLUE_LED = 19
+GREEN_LED = 26
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -39,7 +39,7 @@ def get_humidity_data(humidity):
     return doc
 
 if __name__ == '__main__':
-    GPIO.output(BLUE_LED, True)
+    GPIO.output(GREEN_LED, True)
 
     print(datetime.now())
 
@@ -61,5 +61,5 @@ if __name__ == '__main__':
     util.put(es, index, doc, hum_data)
     # util.search(es, index, {'query': {'match_all': {}}, 'sort': [{'_timestamp': {'order': 'desc'}}]})
 
-    GPIO.output(BLUE_LED, False)
+    GPIO.output(GREEN_LED, False)
     GPIO.cleanup()
